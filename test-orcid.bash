@@ -26,7 +26,6 @@ trap 'error ${LINENO}' ERR
 ## Charles Duffy
 ## http://stackoverflow.com/a/185900
 
-
 ORCID=http://qa.orcid.org/0000-0002-5196-1587
 # Needed as pub.qa.orcid.org has an invalid SSL certificate
 INSECURE=--insecure
@@ -70,17 +69,17 @@ curl -f -o albert.rdf    --dump-header albert.rdf.headers    -H "Accept: applica
 curl -f -o albert.ttl    --dump-header albert.ttl.headers    -H "Accept: text/turtle" -L $INSECURE $ORCID
 curl -f -o albert.nt     --dump-header albert.nt.headers     -H "Accept: application/n-triples" -L $INSECURE $ORCID
 # FIXME: application/ld+json is broken, gives 406 Not Acceptable
-#curl -v -f -o albert.jsonld --dump-header albert.jsonld.headers -H "Accept: application/ld+json" -L $INSECURE $ORCID
+curl -v -f -o albert.jsonld --dump-header albert.jsonld.headers -H "Accept: application/ld+json" -L $INSECURE $ORCID
 
 # Checking expected Content-Type
 grep Content-Type albert.rdf.headers | grep -q application/rdf+xml
 grep Content-Type albert.ttl.headers | grep -q text/turtle
 # FIXME: Seems to return text/html instead!
-#grep Content-Type albert.nt.headers | grep -q application/n-triples
-#grep Content-Type albert.jsonld.headers | grep -q application/ld+json
+grep Content-Type albert.nt.headers | grep -q application/n-triples
+grep Content-Type albert.jsonld.headers | grep -q application/ld+json
 
 
-extensions="rdf ttl" #FIXME: Also: nt jsonld
+extensions="rdf ttl nt jsonld" #FIXME: Also: nt jsonld
 for ext in $extensions ; do
   f=albert.$ext
   echo "Checking $f"
@@ -114,8 +113,7 @@ for ext in $extensions ; do
 
 
   # Find out where we were redirected to
-  rdf_location=`grep Location $f.headers | tail -n1 | awk '{print $2}'`
-  rdf_location="http://pub.qa.orcid.org/orcid-pub-web/experimental_rdf_v1/0000-0002-5196-1587"
+  rdf_location=`grep Location $f.headers | tail -n1 | awk '{print $2}'`  
   # This should be used as the subject of metadata about the
   # foaf:PersonalProfileDocument
   echo " Checking metadata for $rdf_location"
