@@ -113,7 +113,7 @@ for ext in $extensions ; do
 
 
   # Find out where we were redirected to
-  rdf_location=`grep Location $f.headers | tail -n1 | awk '{print $2}'`  
+  rdf_location=`grep Location $f.headers | tail -n1 | awk '{print $2}'`
   # This should be used as the subject of metadata about the
   # foaf:PersonalProfileDocument
   echo " Checking metadata for $rdf_location"
