@@ -36,6 +36,7 @@ Current issues (2016-01-07) using http://qa.orcid.org/0000-0002-5196-1587:
 * SSL certificates of https://pub.qa.orcid.org/ is not valid (thus using `--insecure`)
 * `Accept: application/n-triples` (N-Triples) wrongly returns the `text/html` rendering
 * `Accept: application/ld+json` (JSON-LD) fails with 406 Not Acceptable
+ ** See the branch [no-jsonld-or-nt](https://github.com/stain/orcid-rdf-tests/tree/no-jsonld-or-nt) to test without these
 * Wrong URL is given for the `foaf:PersonalProfileDocument` - the redirection goes to https://pub.qa.orcid.org/experimental_rdf_v1/0000-0002-5196-1587
   but the description is about non-existing http://pub.qa.orcid.org/orcid-pub-web/experimental_rdf_v1/0000-0002-5196-1587
   
